@@ -1,0 +1,131 @@
+---
+title: "Exercise_2"
+author: "Bless Tetteh"
+date: '`r Sys.Date()`'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(tibble)
+library(readr)
+```
+
+### Working with a single vector 2
+```{r single-vector}
+rainfall <- c( 0.1, 0.6, 33.8, 1.9, 9.6, 4.3, 33.7, 0.3, 0.0, 0.1)
+
+# subset of the rainfall data where rain is larger than 20
+rainfall[rainfall > 20] #Using the bracket []
+subset(rainfall, rainfall>20) #Using subset function
+# mean rainfall for days where the rainfall was at least 4
+mean(rainfall[rainfall >= 4]) #Using []
+mean(subset(rainfall, rainfall >= 4)) #Using subset
+#Subset the vector where it is either exactly zero, or exactly 0.6
+rainfall[rainfall==0 | rainfall==0.6] #Using []
+subset(rainfall, rainfall==0 | rainfall==0.6) #Using subset
+```
+###  Alphabet aerobics 2
+```{r alphabet}
+#What is the 18th letter of the alphabet
+letters[18]
+#What is the last letter of the alphabet (don’t guess, write code)?
+letters[length(letters)]
+#random subset of fifteen letters
+set.seed(42)
+alpha <- sample(letters, size = 15, replace = TRUE)
+alpha
+any(duplicated(alpha))
+duplicated(alpha)
+alpha[duplicated(alpha)]
+```
+###  Basic operations with the Cereal data
+```{r cereal-data}
+#Loading the data
+cereals <- read_csv("cereal.csv")
+head(cereals)
+str(cereals)
+colnames(cereals)
+# Add a new variable to the dataset called ’totalcarb’, which is the sum of ’carbo’ and ’sugars’.
+cereals <- cereals %>%
+  mutate(totalcarb = Carbs + Sugars)
+names(cereals)
+# How many cereals in the dataframe are ’hot’ cereals?
+hot_cereals <- cereals %>%
+  filter(Type=="H")
+nrow(hot_cereals)
+#How many unique manufacturers are included in the dataset? 
+length(unique(cereals$Manufacturer))
+unique(cereals$Manufacturer)
+#Take a subset of the dataframe with only the Manufacturer ’K’ (Kellogg’s)
+kellog_cereals <- cereals %>% 
+  filter(Manufacturer == "Kelloggs")
+kellog_cereals
+#Using subset
+kellogg <- subset(cereals, Manufacturer == "Kelloggs")
+kellogg
+#Take a subset of the dataframe of all cereals that have less than 80 calories, AND have more than ‚20 units of vitamins.
+all_cereals <- cereals %>% 
+  filter(Calories <80 & `Vitamins and Minerals` > 20)
+all_cereals
+#Takeasubset of the dataframe containing cereals that contain at least 1 unit of sugar
+subset_cereal <- cereals %>% 
+  filter(Sugars >= 1) %>% select(`Cereal Name`, Calories, `Vitamins and Minerals`)
+head(subset_cereal)
+#For one of the above subsets, write a new CSV file to disk using write.csv
+write.csv(subset_cereal, "subset_cereal.csv", row.names = FALSE)
+getwd()
+cereals <- cereals %>% 
+  rename(Producer = Manufacturer)
+head(cereals)
+```
+### A short dataset
+```{r honeyeaters}
+honeyeaters <- read_csv("honeyeaters.csv")
+head(honeyeaters)
+#Add a day number to the dataset you read in above (sunday=1, saturday=7).
+honeyeaters <- honeyeaters %>% 
+  mutate(day_number = seq(1, 7))
+honeyeaters
+#Delete the ’Day’ variable (to only keep the daynumber that you added above).
+honeyeaters <- honeyeaters %>% select(-Day)
+honeyeaters
+# On which day number did you observe the most honeyeaters?
+honeyeaters$day_number[which.max(honeyeaters$nrbirds)]
+#Sort the dataset by number of birds seen
+ncol(honeyeaters)
+honeyeaters[order(honeyeaters$nrbirds),]
+```
+### Titanic
+```{r titanic}
+#Load the data
+titanic_data <- read_csv("Titanic.csv")
+head(titanic_data)
+str(titanic_data)
+#a subset of male survivors
+male_survivors <- subset(titanic_data, Sex == "male" & Survived == 1) # Using subset
+male_survivors
+view(male_survivors)
+#Subset of female survivors
+female_survivors <- titanic_data[titanic_data$Sex == "female" & titanic_data$Survived == 1,] #Using square brackets
+female_survivors
+#name of the oldest surviving male
+oldest_male_index <- which.max(male_survivors$Age)
+oldest_male_name <- male_survivors$Name[oldest_male_index]
+oldest_male_name
+#youngest surviving female
+view(female_survivors)
+youngest_female_index <- which.min(female_survivors$Age)
+youngest_female_name <- female_survivors$Name[youngest_female_index]
+youngest_female_name
+#Take 15 random names of passengers from the Titanic, and sort them alphabetically
+set.seed(42)
+random_passengers_names <- sort(sample(titanic_data$Name, 15, replace = FALSE))
+random_passengers_names
+#Generate a vector that contains the names of all objects in the workspace.
+workspace_objects <- ls()
+workspace_objects
+rm(list = setdiff(ls(), "titanic_data"))
+ls()
+```

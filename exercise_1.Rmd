@@ -1,0 +1,96 @@
+---
+title: "Exercise1"
+author: "Bless Tetteh"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo = TRUE, eval=TRUE}
+#Sum of 100.1, 234.9 and 12.01
+sum(100.1, 234.9, 12.01)
+# The square root of 256
+sqrt(256)
+#logarithm and cos
+log10(100)*cos(pi)
+#cumulative sum of 2,3,4,5,6
+x<-c(2,3,4,5,6)
+cumsum(x)
+#Reverse cumsum
+y<- rev(x)
+cumsum(y)
+#Random numbers between 0 and 100
+random <- 0:100
+sample(random,size = 10, replace = TRUE)
+#Using runi
+round(runif(10, min = 0, max = 100))
+
+num1 <-10
+num2 <- 20
+result <- num1 * num2
+result
+ls()
+myvect <- c(num1, num2, result)
+min(myvect) #min vale
+max(myvect) #max value
+var(myvect) # variance
+rm(myvect)
+rainfall <-c( 0.1, 0.6, 33.8, 1.9, 9.6, 4.3, 33.7, 0.3, 0.0, 0.1)
+#Mean rainfall
+mean(rainfall)
+#standard deviation
+sd(rainfall)
+#Cumulative rainfall
+cumsum(rainfall)
+#Day with highest rainfall 
+which.max(rainfall)
+
+# cylinders  2.1, 3.4, 2.5, 2.7, 2.9
+cylinder_length <- c( 2.1, 3.4, 2.5, 2.7, 2.9)
+cylinder_diameter <- c(0.3, 0.5, 0.6, 0.9, 1.1)
+# correlation
+cor(cylinder_length,cylinder_diameter)
+#Calculating the volume
+volume <- (cylinder_length*pi*(cylinder_diameter/2)^2)
+volume
+#Mean volume
+mean_volume <- mean(volume)
+mean_volume
+#Standard deviation
+sd_volume <- sd(volume)
+sd_volume
+#coefficient of variation
+cv_volume <- (sd_volume/mean_volume)*100
+cv_volume
+volume_mm3 <- volume*1000
+volume_mm3
+#Working with alphabets
+alphabet <- c("A", "B", "C", "D")
+rep(alphabet, each = 3)
+rep(alphabet, times = 3)
+sort(sample(letters, 10, replace = TRUE))
+vec1 <- c(sample(letters, 5, replace = TRUE), sample(LETTERS, 5, replace = TRUE))
+sort(vec1)
+rev(sort(vec1))
+
+ x <- c(1,2,5,9,11)
+ y <- c(2,5,1,0,23)
+ intersect(x,y)
+ setdiff(x,y)
+ union(x,y)
+ 
+ 
+ mat1 <- matrix(runif(10*10, min = 0, max = 1), nrow = 10, ncol = 10)
+ mat1
+ row_means = rowMeans(mat1)
+ row_means
+ sd(row_means)
+ hist(row_means)
+ 
+ library(car)
+ 
+ ?densityPlot 
+```

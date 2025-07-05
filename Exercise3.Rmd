@@ -1,0 +1,95 @@
+---
+title: "Exercise_3"
+author: "Bless Tetteh"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(lubridate)
+library(Hmisc)
+```
+
+### Titanic-data
+```{r titanic-data}
+#Load the dataset
+titanic_data <- read_csv("Titanic.csv")
+#View first 6 record of the dataset
+head(titanic_data)
+#Check the structure of the dataset
+str(titanic_data)
+#Convert the ’Name’ (passenger name) variable to a ’character’ variable, and store it in the dataframe. 
+titanic_data$Name <- as.factor(titanic_data$Name)
+str(titanic_data)
+# Convert the ’Name’ (passenger name) variable to a ’character’ variable, and store it in the dataframe.
+titanic_data$Name <- as.character(titanic_data$Name)
+str(titanic_data)
+#How many observations of ’Age’ are missing from the dataframe?
+sum(is.na(titanic_data$Age))
+summary(titanic_data$Age)
+#Make a new variable called ’Status’, based on the ’Survived’ variable already in the dataset
+titanic_data$status <- factor(ifelse(titanic_data$Survived==0, "dead", "alive"))
+summary(titanic_data$status)
+#Count the number of passengers in each class
+table(titanic_data$Pclass)
+# Using grep, find the six passengers with the last name ’Fortune’
+fortunepass <- titanic_data[grep("Fortune", titanic_data$Name),]
+fortunepass2 <- subset(titanic_data, grepl("Fortune", titanic_data$Name))
+#Did they all survive?
+all(fortunepass$Survived==1)
+#For what proportion of the passengers is the age unknown?
+age_missing <- subset(titanic_data, is.na(Age))
+table(age_missing$Pclass)/ nrow(age_missing)
+nrow(age_missing)
+```
+### Hydro_dam-data
+```{r hydro-data}
+#Load the data
+hydro_data <- read_csv("hydro.csv")
+#View first 6 rows of the data
+head(hydro_data)
+# Change the first variable to a Date class
+hydro_data$Date <- as.Date(hydro_data$Date)
+head(hydro_data)
+#Are the successive measurements in the dataset always exactly two week apart?
+diff(hydro_data$Date)
+unique(diff(hydro_data$Date))
+# Assume that a dangerously low level of the dam is 600 Gwh. How many weeks was the dam level equal to or lower than this value?
+subset(hydro_data, storage < 600)
+sum(hydro_data$storage < 600)*2 # 104 weeks
+# How many times did storage decrease below 600 (regardless of how long it remained below 600)?
+hydrolow <- subset(hydro_data, storage < 600)
+hydrolow
+diff(hydrolow$Date)
+sum(diff(hydrolow$Date)>14) + 1
+```
+### HFE tree measurements-data
+```{r hfe-data}
+#Read the data and look at various summaries of the dataset.
+hfe_data <- read_csv("HFEIFplotmeans_synthetic.csv")
+#View first 6 rows of the dataset
+head(hfe_data)
+#Check the description of the dataset
+describe(hfe_data)
+#View the structure of the dataset
+str(hfe_data)
+#View the summary of the dataset
+summary(hfe_data)
+#From these summaries, find out how many missing values there are for height and diameter. Also count the number of missing values
+sum(is.na(hfe_data$meandiameter)) #Total missing for diameter
+sum(is.na(hfe_data$meanheight)) #total missing for height
+#Inspect the levels of the treatment (treat), with the levels function. Also count the number of levels with the nlevels function. Now assign new levels to the factor, replacing the abbreviations with a more informative label.
+hfe_data$treat <- as.factor(hfe_data$treat)
+levels(hfe_data$treat)
+nlevels(hfe_data$treat)
+# Using table, count the number of observations by treat, to check if the dataset is balanced. Be aware that table simply counts the number of rows, regardless of missing values. Now take a subset of the dataset where height is not missing, and check the number of observations again.
+table(hfe_data$treat)
+hfe_height <- subset(hfe_data, !is.na(hfe_data$meanheight))
+table(hfe_height$treat)
+#For which dates do missing values occur in height in this dataset?
+hfe_data$Date<- as.Date(hfe_data$Date)
+unique(hfe_data$Date[is.na(hfe_data$meanheight)])
+View(hfe_data)
+```

@@ -1,0 +1,28 @@
+---
+title: "About My Degree"
+author: "Bless Tetteh"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# **Making your mark**
+I graduated from University of Ghana,Legon in Bsc Statistics with Computer Science. I lovce what I'm doing and I know I will definitely be great in the future. I would love to be a great Data Scientists in the future. This is why i'm working very harder to reach there. I know it is not easy but I will do everything within my power to reach there. Just believe that.Oh, how I love this!!!. This is why I sing, 
+"It is well with me,
+I'll just keep on going,
+no goinmg back..."
+
+## *My Greatest goal*
+1. Get a good job^1^
+2. Bring the best out of me
+3. Make my country **proud**.
+4. Settle in U.S.A
+5. ~~Not look down on myself~~
+
+### ^1^Bible verses
+* John 10:30 
+* Romans 6:7
+* 1 John 2:3

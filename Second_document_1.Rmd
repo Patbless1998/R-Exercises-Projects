@@ -1,0 +1,30 @@
+---
+title: "PRACTICAL RMARKDOWN"
+author: "Bless Tetteh"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r echo=TRUE, eval=FALSE}
+#Only the code will show
+x <- rnorm(100)
+mean(x)
+```
+```{r echo=FALSE, eval=TRUE}
+message("Only the results will show")
+x <- rnorm(100)
+mean(x)
+```
+```{r echo=TRUE, eval=TRUE}
+#Both the code and results will show
+x <- rnorm(100)
+mean(x)
+```
+```{r echo=FALSE, eval=FALSE}
+cat("Nothing is displayed")
+x <- rnorm(100)
+mean(x)
+```

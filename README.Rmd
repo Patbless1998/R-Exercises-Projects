@@ -9,5 +9,5 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-##README
+## README
 Repository for personal exercises and project based exercises

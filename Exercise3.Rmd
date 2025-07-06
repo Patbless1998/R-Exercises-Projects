@@ -92,4 +92,7 @@ table(hfe_height$treat)
 hfe_data$Date<- as.Date(hfe_data$Date)
 unique(hfe_data$Date[is.na(hfe_data$meanheight)])
 ```
+<<<<<<< HEAD
 ### Flux Dataset
+=======
+>>>>>>> 47b7fb63eea738162d6752dc3efeb9b59760087f

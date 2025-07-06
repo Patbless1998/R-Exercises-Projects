@@ -91,5 +91,4 @@ table(hfe_height$treat)
 #For which dates do missing values occur in height in this dataset?
 hfe_data$Date<- as.Date(hfe_data$Date)
 unique(hfe_data$Date[is.na(hfe_data$meanheight)])
-View(hfe_data)
 ```

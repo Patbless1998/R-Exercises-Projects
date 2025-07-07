@@ -93,3 +93,30 @@ hfe_data$Date<- as.Date(hfe_data$Date)
 unique(hfe_data$Date[is.na(hfe_data$meanheight)])
 ```
 ### Flux Dataset
+```{r flux-data}
+#Load the dataset
+flux_data <- read_csv("Fluxtower.csv")
+head(flux_data)
+#Rename the first column to ’DateTime’
+flux_data <- dplyr::rename(flux_data, DateTime = TIMESTAMP)
+head(flux_data)
+#Convert DateTime to a POSIXct class.
+flux_data$DateTime <- dmy_hm(flux_data$DateTime)
+head(flux_data)
+str(flux_data)
+#Did the above action produce any missing values? Were these already missing in the original dataset?
+any(is.na(flux_data$DateTime))
+flux_original <- read_csv("Fluxtower.csv")
+any(is.na(flux_original$TIMESTAMP))
+# Add a variable to the dataset called ’Quality’. This variable should be ’bad’ when the variable ’ustar’ is less than 0.15, and ’good’ otherwise.
+flux_data$Quality <- ifelse(flux_data$ustar < 0.15, "bad", "good")
+head(flux_data)
+#Add a ’month’ column to the dataset, as well as ’year’.
+flux_data$Month <- month(flux_data$DateTime)
+flux_data$Year <- year(flux_data$DateTime)
+head(flux_data)
+#Look at the ’Rain’ column. There are some problems; re-read the data or find another way to display NA whenever the data have an invalid value.
+flux_data$Rain[flux_data$Rain == "#DIV/0!"] <- NA
+head(flux_data$Rain, 100)
+```
+
